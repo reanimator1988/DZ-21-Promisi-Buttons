@@ -9,7 +9,7 @@ for (let i = 1; i <= buttonCount; i++) {
     const button = document.createElement('button');
     button.textContent = i;
     button.addEventListener('click', function () {
-        button.style.cssText = "box-shadow: 15px 15px 15px rgb(255, 0, 255); background: #00FFFF;";
+        button.style.cssText = "box-shadow: 15px 15px 15px rgb(255, 0, 255); background: #00FFFF; border: none;";
         if (i % 2 !== 0) {
             oddButtonClicks++;
             if (oddButtonClicks === Math.ceil(buttonCount / 2)) {
