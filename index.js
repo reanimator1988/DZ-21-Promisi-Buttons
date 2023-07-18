@@ -31,7 +31,7 @@ for (let i = 1; i <= buttonCount; i++) {
             if (uniqueButtonClicks.size === buttonCount) {
                 setTimeout(function () {
                     alert("Усі кнопки були натиснуті!");
-                }, 1300);
+                }, 1000);
             }
         }
         button.disabled = true;
