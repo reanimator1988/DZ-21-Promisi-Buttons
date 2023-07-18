@@ -6,11 +6,12 @@ h1 {
 }
 
 .buttons {
+	border-radius: 5px;
 	width: 100px;
 	height: 30px;
 	margin: 100px 10px 0 170px;
-	box-shadow: none;
 	transition: box-shadow 0.3s;
 	background: rgb(8, 236, 96);
 	cursor: pointer;
+	
 }
