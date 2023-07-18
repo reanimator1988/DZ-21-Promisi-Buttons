@@ -20,7 +20,7 @@ for (let i = 1; i <= buttonCount; i++) {
                     alert('Всі непарні кнопки були натиснуті!');
                 }
             }
-            
+
             if (i % 2 === 0) {
                 evenButtonClicks++;
                 if (evenButtonClicks === Math.floor(buttonCount / 2)) {
@@ -31,7 +31,7 @@ for (let i = 1; i <= buttonCount; i++) {
             if (uniqueButtonClicks.size === buttonCount) {
                 setTimeout(function () {
                     alert("Усі кнопки були натиснуті!");
-                }, 1000);
+                }, 1300);
             }
         }
         button.disabled = true;
