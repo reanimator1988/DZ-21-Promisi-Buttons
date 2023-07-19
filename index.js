@@ -1,60 +1,58 @@
 "use strict";
 
 
-const buttonCount = 12;
-let oddButtonClicks = 0;
-let evenButtonClicks = 0;
-let uniqueButtonClicks = new Set();
+function addShadow(button) {
+    return new Promise(resolve => {
+        button.classList.add('clicked');
+        setTimeout(() => {
+            resolve(button);
+        }, 200);
+    });
+}
 
-function handleClick(i) {
-    return new Promise(function(resolve, reject) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.addEventListener('click', function () {
-            if (!button.disabled) {
-                button.style.cssText = "box-shadow: 15px 15px 15px rgb(255, 0, 255); background: #00FFFF; border: none; color: black";
-                uniqueButtonClicks.add(i);
+const buttons = Array.from({ length: 12 }, (_, index) => {
+    const button = document.createElement('button');
+    button.classList.add('buttons');
+    button.textContent = `${index + 1}`;
+    document.body.appendChild(button);
 
-                if (i % 2 !== 0) {
-                    oddButtonClicks++;
-                    if (oddButtonClicks === Math.ceil(buttonCount / 2)) {
-                        alert('Всі непарні кнопки були натиснуті!');
-                    }
-                }
+    return button;
+});
 
-                if (i % 2 === 0) {
-                    evenButtonClicks++;
-                    if (evenButtonClicks === Math.floor(buttonCount / 2)) {
-                        alert('Всі парні кнопки були натиснуті!');
-                    }
-                }
+const oddButtons = buttons.filter((_, index) => index % 2 === 0);
+const evenButtons = buttons.filter((_, index) => index % 2 !== 0);
+const styleCss = "box-shadow: 15px 15px 15px rgb(255, 0, 255); background: #00FFFF; border: none; color: black";
 
-                if (uniqueButtonClicks.size === buttonCount) {
-                    setTimeout(function () {
-                        alert("Усі кнопки були натиснуті!");
-                    }, 1000);
-                    resolve();
-                }
-            }
-            button.disabled = true;
+const clickEventController = oddButtons.map(button => {
+    return new Promise(resolve => {
+        button.addEventListener('click', async () => {
+            button.style.cssText = styleCss;
+            await addShadow(button);
+            resolve(button);
         });
-        document.body.appendChild(button);
-        button.classList.add('buttons');
     });
-}
+});
 
-function createButtons() {
-    const promises = [];
-    for (let i = 1; i <= buttonCount; i++) {
-        promises.push(handleClick(i));
-    }
-    return Promise.all(promises);
-}
+Promise.all(clickEventController).then(() => {
+    alert('Всі непарні кнопки були натиснуті!');
+});
 
-createButtons()
-    .then(function() {
-        console.log("All buttons created and handled successfully!");
-    })
-    .catch(function(error) {
-        console.error("An error occurred while creating/handling buttons:", error);
+const buttonClickHandler = evenButtons.map(button => {
+    return new Promise(resolve => {
+        button.addEventListener('click', async () => {
+            button.style.cssText = styleCss;
+            await addShadow(button);
+            resolve(button);
+        });
     });
+});
+
+Promise.all(buttonClickHandler).then(() => {
+    alert('Всі парні кнопки були натиснуті!');
+});
+
+const buttonClickExceptAll = clickEventController.concat(buttonClickHandler);
+
+Promise.all(buttonClickExceptAll).then(() => {
+    alert("Усі кнопки були натиснуті!");
+});
